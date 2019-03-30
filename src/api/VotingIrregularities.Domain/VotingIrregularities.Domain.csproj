@@ -21,5 +21,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VoteMonitor.Entities\VoteMonitor.Entities.csproj" />
   </ItemGroup>
 </Project>
