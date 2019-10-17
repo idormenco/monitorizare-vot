@@ -14,7 +14,7 @@ spec:
       paths:
         - path: /voting-irregularities-api/?(.*)
           backend:
-            serviceName: vote-monitoring-service
+            serviceName: voting-irregularities-api-service
             servicePort: 80
 ---            
 apiVersion: v1
@@ -58,7 +58,7 @@ spec:
             value: http://+:80
           - name: ASPNETCORE_ENVIRONMENT
             value: Development
-          - name: Server__PathBase
+          - name: Api__PathBase
             value: "/voting-irregularities-api"
           ports:
             - name: http-port
