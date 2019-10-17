@@ -1,0 +1,73 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: vote-monitoring
+  name: voting-irregularities-api-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /voting-irregularities-api/$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /voting-irregularities-api/?(.*)
+          backend:
+            serviceName: vote-monitoring-service
+            servicePort: 80
+---            
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: vote-monitoring
+  name: voting-irregularities-api-service
+spec:
+  selector:
+    app: voting-irregularities-api
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http-port
+---  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: vote-monitoring
+  name: voting-irregularities-api
+  labels:
+    app: voting-irregularities-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "voting-irregularities-api"
+  template:
+    metadata:
+      labels:
+        app: voting-irregularities-api
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: voting-irregularities-api-container
+          image: "voting-irregularities-api:v1"
+          env:
+          - name: ASPNETCORE_URLS
+            value: http://+:80
+          - name: ASPNETCORE_ENVIRONMENT
+            value: Development
+          - name: Server__PathBase
+            value: "/voting-irregularities-api"
+          ports:
+            - name: http-port
+              containerPort: 80
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 50m
+            limits:
+              memory: 200Mi
+              cpu: 200m
+             
