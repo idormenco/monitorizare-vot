@@ -227,8 +227,19 @@ namespace VoteMonitor.Entities
                     .HasConstraintName("FK_PollingStation_County");
             });
 
+			modelBuilder.Entity<SimpleStatistics>(entity =>
+			{
+				entity.HasKey(e => e.Label)
+					.HasName("PK_Statistics");
+			});
 
-            modelBuilder.Entity<Form>(entity => {
+			modelBuilder.Entity<PollingStationsStatistics>(entity =>
+			{
+				entity.HasKey(e => new { e.Label, e.Cod })
+					.HasName("PK_Polling_Stations_Statistics");
+			});
+
+			modelBuilder.Entity<Form>(entity => {
                 entity.HasKey(e => e.Id)
                     .HasName("PK_FormVersion");
 
@@ -341,7 +352,10 @@ namespace VoteMonitor.Entities
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<AnswerQueryInfo> AnswerQueryInfos{ get;set; }
 
-        public class AnswerQueryInfo {
+		public virtual DbSet<SimpleStatistics> SimpleStatistics { get; set; }
+		public virtual DbSet<PollingStationsStatistics> PollingStationsStatistics { get; set; }
+
+		public class AnswerQueryInfo {
             public int IdPollingStation { get; set; }
             public int IdObserver { get; set; }
             public string ObserverName { get; set; }

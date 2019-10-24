@@ -47,6 +47,8 @@ using VoteMonitor.Api.Core.Handlers;
 using VoteMonitor.Api.Core.Services.Impl;
 using VoteMonitor.Api.Notification.Controllers;
 using System.IO;
+using VoteMonitor.Api.Statistics.Controllers;
+using VoteMonitor.Api.Statistics.Options;
 
 namespace VotingIrregularities.Api
 {
@@ -163,7 +165,8 @@ namespace VotingIrregularities.Api
                 .AddApplicationPart(typeof(NoteController).Assembly)
                 .AddApplicationPart(typeof(FormController).Assembly)
                 .AddApplicationPart(typeof(AnswersController).Assembly)
-                .AddControllersAsServices()
+                .AddApplicationPart(typeof(StatisticsController).Assembly)
+				.AddControllersAsServices()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(options =>
@@ -239,6 +242,7 @@ namespace VotingIrregularities.Api
             app.UseAuthentication();
 
             _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<MobileSecurityOptions>>());
+            _container.RegisterSingleton(() => app.ApplicationServices.GetService<IOptions<StatisticsOptions>>());
 
             RegisterServices(app);
 
@@ -444,6 +448,7 @@ namespace VotingIrregularities.Api
             yield return typeof(AnswersController).GetTypeInfo().Assembly;
             yield return typeof(UploadFileHandler).GetTypeInfo().Assembly;
             yield return typeof(NotificationController).GetTypeInfo().Assembly;
+            yield return typeof(StatisticsController).GetTypeInfo().Assembly;
             // just to identify VotingIrregularities.Domain assembly
         }
 

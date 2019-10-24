@@ -16,5 +16,20 @@ namespace VoteMonitor.Api.Core.Services
 
         public Task SaveObjectSafeAsync(CacheObjectsName name, object value,
             DistributedCacheEntryOptions options = null) => throw new NotImplementedException();
-    }
+
+		public Task<T> GetOrSaveDataInCacheAsync<T>(string cacheKey, Func<Task<T>> source, DistributedCacheEntryOptions options = null)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<T> GetObjectSafeAsync<T>(string name)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task SaveObjectSafeAsync(string name, object value, DistributedCacheEntryOptions options = null)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

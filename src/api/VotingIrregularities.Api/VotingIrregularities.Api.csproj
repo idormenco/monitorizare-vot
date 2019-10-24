@@ -30,6 +30,7 @@
     <None Include="etc\FireBaseCredentials.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\VoteMonitor.Api.Statistics\VoteMonitor.Api.Statistics.csproj" />
     <ProjectReference Include="..\VoteMonitor.Api.Answer\VoteMonitor.Api.Answer.csproj" />
     <ProjectReference Include="..\VoteMonitor.Api.Core\VoteMonitor.Api.Core.csproj" />
     <ProjectReference Include="..\VoteMonitor.Api.Form\VoteMonitor.Api.Form.csproj" />

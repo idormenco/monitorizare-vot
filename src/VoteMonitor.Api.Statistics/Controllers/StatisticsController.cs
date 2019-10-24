@@ -55,18 +55,24 @@ namespace VoteMonitor.Api.Statistics.Controllers
 			});
 		}
 
-		//todo
 		[HttpGet]
 		[Route("notifications")]
 		public async Task<object> GetNotifications(NotificationsStatisticsFilterModel model)
 		{
-			var command = new GetTopNotificationsCommand(
-				model.Page,
-				model.PageSize,
-				_options.CacheHours,
-				_options.CacheMinutes,
-				_options.CacheSeconds
-				);
+			var idNgo = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+			var isOrganiser = this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
+
+			var command = new GetStatisticsTopByNotificationsCommand()
+			{
+				IdNgo = idNgo,
+				IsOrganizer = isOrganiser,
+				Page = model.Page,
+				PageSize = model.PageSize,
+				GroupBy =model.GroupBy,
+				CacheHours = _options.CacheHours,
+				CacheMinutes =_options.CacheMinutes,
+				CacheSeconds = _options.CacheSeconds,
+			};
 
 
 			var result = await _mediator.Send(command);
