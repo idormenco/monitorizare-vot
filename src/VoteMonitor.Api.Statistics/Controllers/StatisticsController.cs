@@ -2,11 +2,12 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using VoteMonitor.Api.Statistics.Dtos;
+using VoteMonitor.Api.Core;
 using VoteMonitor.Api.Statistics.Models;
 using VoteMonitor.Api.Statistics.Options;
 using VoteMonitor.Api.Statistics.Queries;
@@ -17,22 +18,44 @@ namespace VoteMonitor.Api.Statistics.Controllers
 	public class StatisticsController : Controller
 	{
 		private readonly IMediator _mediator;
-		private readonly StatisticsCachingOptions _options;
+		private readonly StatisticsOptions _options;
 		private readonly ILogger _logger;
 		private readonly IMapper _mapper;
+		private readonly IConfigurationRoot _configuration;
 
 		public StatisticsController(IMediator mediator
-			, IOptions<StatisticsCachingOptions> options
+			, IOptions<StatisticsOptions> options
 			, ILogger logger
-			, IMapper mapper)
+			, IMapper mapper
+			, IConfigurationRoot configuration)
 		{
 			_mediator = mediator;
 			_options = options.Value;
 			_logger = logger;
 			_mapper = mapper;
+			_configuration = configuration;
 		}
 
+		[HttpGet]
+		[Route("NumberOfObservers")]
+		public async Task<ApiListResponse<SimpleStatisticsModel>> NumberOfObservers(PagingModel model)
+		{
+			var idNgo = this.GetIdOngOrDefault(_configuration.GetValue<int>("DefaultIdOng"));
+			var isOrganiser= this.GetOrganizatorOrDefault(_configuration.GetValue<bool>("DefaultOrganizator"));
 
+			return await _mediator.Send(new CountNumberOfObserversCommand
+			{
+				IdNgo = idNgo,
+				IsOrganizer = isOrganiser,
+				PageSize = model.PageSize,
+				Page = model.Page,
+				CacheHours = _options.CacheHours,
+				CacheMinutes = _options.CacheMinutes,
+				CacheSeconds = _options.CacheSeconds
+			});
+		}
+
+		//todo
 		[HttpGet]
 		[Route("notifications")]
 		public async Task<object> GetNotifications(NotificationsStatisticsFilterModel model)
@@ -112,7 +135,7 @@ namespace VoteMonitor.Api.Statistics.Controllers
 		[Route("mini/all")]
 		public async Task<List<LabeledResponseModel>> All()
 		{
-			var list = new List<LabeledResponseDto>
+			var list = new List<LabeledResponseModel>
 			{
 				await _mediator.Send(new CountAnswersCommand()),
 				await _mediator.Send(new CountStationsVisitedCommand()),
@@ -121,9 +144,8 @@ namespace VoteMonitor.Api.Statistics.Controllers
 				await _mediator.Send(new CountNotesUploadedCommand()),
 				await _mediator.Send(new CountCountiesVisitedCommand())
 			};
-			var mappedList = _mapper.Map<List<LabeledResponseModel>>(list);
-
-			return mappedList;
+			
+			return list;
 		}
 	}
 }

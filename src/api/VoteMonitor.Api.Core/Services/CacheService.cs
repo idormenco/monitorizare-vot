@@ -19,30 +19,35 @@ namespace VoteMonitor.Api.Core.Services
         }
 
         public async Task<T> GetOrSaveDataInCacheAsync<T>(CacheObjectsName name, Func<Task<T>> source, DistributedCacheEntryOptions options = null)
+		{
+			return await GetOrSaveDataInCacheAsync<T>(name.ToString(), source, options);
+		}
+
+		public async Task<T> GetOrSaveDataInCacheAsync<T>(string cacheKey, Func<Task<T>> source, DistributedCacheEntryOptions options = null)
         {
-            var obj = await GetObjectSafeAsync<T>(name);
+            var obj = await GetObjectSafeAsync<T>(cacheKey);
 
             if (obj != null)
                 return obj;
 
             var result = await source();
 
-            await SaveObjectSafeAsync(name, result, options);
+            await SaveObjectSafeAsync(cacheKey, result, options);
 
             return result;
         }
 
-        public async Task<T> GetObjectSafeAsync<T>(CacheObjectsName name)
+        public async Task<T> GetObjectSafeAsync<T>(string cacheKey)
         {
             var result = default(T);
 
             try
             {
-                var cache = await _cache.GetAsync(name.ToString());
+                var cache = await _cache.GetAsync(cacheKey.ToString());
 
                 if (cache == null)
                 {
-                    _logger.LogInformation($"Cache missed for {name}");
+                    _logger.LogInformation($"Cache missed for {cacheKey}");
                     return default(T);
                 }
 
@@ -59,16 +64,16 @@ namespace VoteMonitor.Api.Core.Services
             return result;
         }
 
-        public async Task SaveObjectSafeAsync(CacheObjectsName name, object value, DistributedCacheEntryOptions options = null)
+        public async Task SaveObjectSafeAsync(string cacheKey, object value, DistributedCacheEntryOptions options = null)
         {
             try
             {
                 var obj = JsonConvert.SerializeObject(value);
 
                 if (options != null)
-                    await _cache.SetAsync(name.ToString(), GetBytes(obj), options);
+                    await _cache.SetAsync(cacheKey, GetBytes(obj), options);
                 else
-                    await _cache.SetAsync(name.ToString(), GetBytes(obj));
+                    await _cache.SetAsync(cacheKey, GetBytes(obj));
 
             }
             catch (Exception exception)

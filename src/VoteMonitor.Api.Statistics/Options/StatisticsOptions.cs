@@ -1,6 +1,6 @@
 ﻿namespace VoteMonitor.Api.Statistics.Options
 {
-	public class StatisticsCachingOptions
+	public class StatisticsOptions
 	{
 		public int CacheHours { get; set; }
 		public int CacheMinutes { get; set; }

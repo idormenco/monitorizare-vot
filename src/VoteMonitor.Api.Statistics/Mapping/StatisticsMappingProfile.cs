@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using VoteMonitor.Api.Statistics.Dtos;
-using VoteMonitor.Api.Statistics.Models;
 
 namespace VoteMonitor.Api.Statistics.Mapping
 {
@@ -8,8 +6,6 @@ namespace VoteMonitor.Api.Statistics.Mapping
 	{
 		public StatisticsMappingProfile()
 		{
-			CreateMap<LabeledResponseDto, LabeledResponseModel>(MemberList.Source);
-			CreateMap<LabeledResponseModel, LabeledResponseDto>(MemberList.Source);
 		}
 	}
 }

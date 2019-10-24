@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using VoteMonitor.Api.Statistics.Dtos;
+using VoteMonitor.Api.Statistics.Models;
 
 namespace VoteMonitor.Api.Statistics.Queries
 {
-	public class CountLoggedInObserversCommand : IRequest<LabeledResponseDto>
+	public class CountLoggedInObserversCommand : IRequest<LabeledResponseModel>
 	{
 	}
 }
