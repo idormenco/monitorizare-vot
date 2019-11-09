@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -35,7 +36,8 @@ namespace VotingIrregularities.Api.Controllers
         /// <param name="dateSectie">Informatii despre sectia de votare si observatorul alocat ei</param>
         /// <returns></returns>
         [HttpPost()]
-        public async Task<IAsyncResult> Inregistreaza([FromBody] ModelDateSectie dateSectie)
+		[Authorize("Observer")]
+		public async Task<IAsyncResult> Inregistreaza([FromBody] ModelDateSectie dateSectie)
         {
             if (!ModelState.IsValid)
                 return this.ResultAsync(HttpStatusCode.BadRequest, ModelState);

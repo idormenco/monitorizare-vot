@@ -12,6 +12,7 @@ using VoteMonitor.Api.Note.Commands;
 using System.Collections.Generic;
 using VoteMonitor.Api.Note.Queries;
 using VoteMonitor.Api.Core.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VoteMonitor.Api.Note.Controllers
 {
@@ -50,7 +51,8 @@ namespace VoteMonitor.Api.Note.Controllers
         /// <param name="note"></param>
         /// <returns></returns>
         [HttpPost("upload")]
-        public async Task<dynamic> Upload(IFormFile file, [FromForm]UploadNoteModel note)
+		[Authorize("Observer")]
+		public async Task<dynamic> Upload(IFormFile file, [FromForm]UploadNoteModel note)
         {
             if (!ModelState.IsValid)
                 return this.ResultAsync(HttpStatusCode.BadRequest);

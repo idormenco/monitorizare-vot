@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using VoteMonitor.Api.Core;
@@ -37,7 +38,8 @@ namespace VotingIrregularities.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Obsolete("use /answers instead")]
-        public async Task<IAsyncResult> CompleteazaRaspuns([FromBody] ModelRaspunsWrapper raspuns)
+		[Authorize("Observer")]
+		public async Task<IAsyncResult> CompleteazaRaspuns([FromBody] ModelRaspunsWrapper raspuns)
         {
 
             if (!ModelState.IsValid)

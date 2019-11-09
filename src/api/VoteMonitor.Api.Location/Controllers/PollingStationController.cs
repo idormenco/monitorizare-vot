@@ -12,6 +12,7 @@ using VoteMonitor.Api.Core;
 using VoteMonitor.Api.Location.Models;
 using VoteMonitor.Api.Location.Queries;
 using VoteMonitor.Api.Location.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VoteMonitor.Api.Location.Controllers
 {
@@ -39,7 +40,8 @@ namespace VoteMonitor.Api.Location.Controllers
         /// <param name="pollingStationInfo">Info about the polling station and its' allocated observer</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IAsyncResult> Register([FromBody] AddPollingStationInfo pollingStationInfo)
+		[Authorize("Observer")]
+		public async Task<IAsyncResult> Register([FromBody] AddPollingStationInfo pollingStationInfo)
         {
             if (!ModelState.IsValid)
                 return this.ResultAsync(HttpStatusCode.BadRequest, ModelState);
