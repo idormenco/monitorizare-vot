@@ -46,6 +46,7 @@ using VoteMonitor.Api.DataExport.Controller;
 using VoteMonitor.Api.Statistics.Controllers;
 using VotingIrregularities.Api.Extensions.Startup;
 using VoteMonitor.Api.County.Controllers;
+using VoteMonitor.Api.Ngo.Controllers;
 
 namespace VotingIrregularities.Api
 {
@@ -106,6 +107,7 @@ namespace VotingIrregularities.Api
                 .AddApplicationPart(typeof(StatisticsController).Assembly)
                 .AddApplicationPart(typeof(DataExportController).Assembly)
                 .AddApplicationPart(typeof(CountyController).Assembly)
+                .AddApplicationPart(typeof(NgoController).Assembly)
 
                 .AddControllersAsServices()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -386,6 +388,7 @@ namespace VotingIrregularities.Api
             yield return typeof(StatisticsController).GetTypeInfo().Assembly;
             yield return typeof(DataExportController).GetTypeInfo().Assembly;
             yield return typeof(CountyController).GetTypeInfo().Assembly;
+            yield return typeof(NgoController).GetTypeInfo().Assembly;
             // just to identify VotingIrregularities.Domain assembly
         }
     }

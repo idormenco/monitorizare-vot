@@ -7,6 +7,7 @@ using VoteMonitor.Api.County.Models;
 using CsvHelper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using VoteMonitor.Api.Core.Models;
 using VoteMonitor.Api.County.Commands;
 using VoteMonitor.Api.County.Queries;
 

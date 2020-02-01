@@ -1,4 +1,4 @@
-﻿namespace VoteMonitor.Api.County.Models
+﻿namespace VoteMonitor.Api.Core.Models
 {
     public class ErrorModel
     {

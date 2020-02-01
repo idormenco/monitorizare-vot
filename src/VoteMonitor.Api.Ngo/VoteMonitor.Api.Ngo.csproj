@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <NoWarn>1701;1702;1591</NoWarn>
+        <DocumentationFile>D:\GitHub\monitorizare-vot\src\\api\VotingIrregularities.Api\api-docs\VoteMonitor.Api.Ngo.xml</DocumentationFile>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.3.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\api\VoteMonitor.Api.Core\VoteMonitor.Api.Core.csproj" />
+    <ProjectReference Include="..\api\VoteMonitor.Entities\VoteMonitor.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

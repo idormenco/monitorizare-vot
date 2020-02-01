@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VoteMonitor.Api.Ngo</name>
+    </assembly>
+    <members>
+        <member name="T:VoteMonitor.Api.Ngo.Controllers.NgoController">
+            <summary>
+            CRUD operations for a NGO
+            </summary>
+        </member>
+        <member name="M:VoteMonitor.Api.Ngo.Controllers.NgoController.GetAllNgosAsync">
+            <summary>
+            Get all ngoIds 
+            </summary>
+            <returns>A list of ngoIds</returns>
+        </member>
+        <member name="M:VoteMonitor.Api.Ngo.Controllers.NgoController.GetNgoByIdAsync(System.Int32)">
+            <summary>
+            Gets details about a specific ngoId
+            </summary>
+            <param name="ngoAdminId">Id of a ngoId</param>
+            <returns>Details about ngoId or error message</returns>
+        </member>
+        <member name="M:VoteMonitor.Api.Ngo.Controllers.NgoController.UpdateNgoAsync(System.Int32,VoteMonitor.Api.Ngo.Models.CreateUpdateNgoModel)">
+            <summary>
+            Update ngoId
+            </summary>
+            <param name="ngoAdminId">Id of ngoId to be updated</param>
+            <param name="ngoId">New ngoId data</param>
+            <returns> 200 code response if update was successful or an error </returns>
+        </member>
+        <member name="M:VoteMonitor.Api.Ngo.Controllers.NgoController.CreateNgoAsync(VoteMonitor.Api.Ngo.Models.CreateUpdateNgoModel)">
+            <summary>
+            Adds a new Ngo
+            </summary>
+            <param name="ngoId">Ngo details</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

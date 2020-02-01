@@ -129,7 +129,7 @@ namespace VoteMonitor.Entities
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(200);
+                    .HasMaxLength(200); 
 
                 entity.Property(e => e.Organizer).HasDefaultValueSql("0");
                 entity.Property(e => e.IsActive).HasDefaultValueSql("0");
