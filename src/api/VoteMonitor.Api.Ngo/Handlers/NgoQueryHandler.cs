@@ -50,7 +50,6 @@ namespace VoteMonitor.Api.Ngo.Handlers
                 if (ngo == null)
                 {
                     return Result.Failure<NgoModel>($"Could not find ngo with id {request.NgoId}");
-
                 }
 
                 var mappedNgo = _mapper.Map<NgoModel>(ngo);
@@ -59,7 +58,7 @@ namespace VoteMonitor.Api.Ngo.Handlers
             catch (Exception e)
             {
                 _logger.LogError(e, "Error when loading all ngos");
-                return Result.Failure<NgoModel>($"Could not load info for ngo with id {request.NgoId}");
+                return Result.Failure<NgoModel>($"Error when loading info for ngo with id {request.NgoId}");
             }
         }
     }
